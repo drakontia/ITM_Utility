@@ -1,0 +1,74 @@
+2.2.6. 運用端末設計
+----------------------
+
+2.2.6.1. 導入構成
+^^^^^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header-rows: 1
+
+	端末種別,使用者,使用目的,導入ミドルウェア名,ミドルウェア用途,備考
+	運用監視端末,統合監視オペレーター,監視オペレーションの実施,MS Internet Explorer,監視イベントコンソール（主）
+	AEL,監視イベントコンソール（副）
+	Administrator,監視運用設定の実施
+	SE作業用端末,統合監視システム管理,統合監視システムの運用・保守,MS Internet Explorer,監視イベントコンソール（主）
+	AEL,監視イベントコンソール（副）
+    Administrator,統合監視システム設定の実施
+    TEP,ITM監視設定変更の実施
+
+(a) MS Internet Explorer導入設計
+""""""""""""""""""""""""""""""""""
+
+Internet Explorerについて導入パラメーター・設定要件は特に無し。
+
+(b) Netcoolコンソール導入パラメーター
+"""""""""""""""""""""""""""""""""""""""
+
+（AEL, Administrator, AEN）
+
+.. csv-table::
+    :header-rows: 1
+
+	設定項目,設定値,備考
+	宛先フォルダー,C:\IBM\Tivoli\netcool,導入ディレクトリ
+	インストール・セット(1),カスタム,標準（全モジュールインストール）/カスタム（選択）
+	インストール・セット(2),管理者,Administratorコンソール
+	ローカル・ヘルプ・システム,ヘルプシステム
+	デスクトップ,AEL
+	プロセス・エージェント,Process Agent
+
+(c) TEP導入パラメーター
+"""""""""""""""""""""""""
+
+.. csv-table::
+    :header-rows: 1
+
+	設定項目,設定値,備考
+	インストールフォルダ,C:\IBM\ITM,デフォルト値
+	暗号鍵,IBMTivoliMonitoringEncryptionKey,デフォルト値
+	インストールする機能,Tivoli Enterprise Portal Desktop Client,TEPコンソールのみ
+	セットアップタイプ,Tivoli Enterprise Portalを構成します,初期接続先設定
+	TEPサーバーのあるマシンのホスト名,接続宛先設定値
+
+(d) hostsファイル
+"""""""""""""""""""
+
+（%SYSTEMROOT%\system32\drivers\etc\hostsファイル）
+
+.. csv-table::
+    :header-rows: 1
+
+    IPアドレス,ホスト名
+    10.216.114.70
+    10.216.114.71
+    10.216.114.72
+
+2.2.6.2. Netcool/OMNIbusコンソール設計
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: Netcool/OMNIbusコンソールに関する設定事項は特になし
+
+2.2.6.3. TEPコンソール設計
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: TEPコンソールに関する設定事項は特になし

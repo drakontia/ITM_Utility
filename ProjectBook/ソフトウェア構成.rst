@@ -1,0 +1,86 @@
+**************************
+2. 統合システム詳細設計
+**************************
+
+2.1. 導入ソフトウェア構成
+=============================
+
+2.1.1. 統合監視システム導入ソフトウェア
+--------------------------------------------
+
+.. csv-table::
+    :header-rows: 1
+    :widths: 40, 15, 45
+
+    導入ソフトウェア,バージョン,備考
+    Netcool/OMNIbus,v7.3.1
+    Netcool WebGUI,v7.3,ライセンスはNetcool/OMNIbusに同梱
+    IBM Tivoli Network Manager,v3.8,以降、ITNMと記載
+    IBM Tivoli Monitoring,v6.2.3 FP01,以降、ITMと記載
+    IBM DB2 Enterprise Server Edition,v9.7,ライセンスはIBM Tivoli Monitoringに同梱
+
+2.1.1.1. 統合監視サーバ導入ソフトウェアコンポーネント
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header-rows: 1
+    :widths: 30, 10, 60
+
+	導入ソフトウェアコンポーネント,Fix,機能
+	ObjectServer,FP3,イベント集約・自動処理・ログ監視・運用監視コンソール提供
+	Process Agent,,Netcool/OMNIbusのプロセス制御
+	Bi-Gateway,,ObjectServerの冗長化構成モジュール
+	SNMP Probe,11.0,SNMPトラップ監視
+	EIF Probe,9.0,TECイベントの受信
+	Nonnative Probe,10.0,EIF Probeの稼働前提モジュール
+	ITNM,FP1,死活監視・SNMPポーリング監視
+	WebGUI,FP1,Web Browser経由による運用監視コンソール提供
+	TEMS,FP3,監視対象サーバーリソース監視（ITMv6.2.2）
+	TEPS,FP3,TEMS管理情報をクライアントに表示提供（ITMv6.2.2）
+	DB2,FP5,TEPSの設定情報を保管するデータベース
+
+2.1.1.2. 監視対象機器導入ソフトウェアコンポーネント
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header-rows: 1
+    :widths: 30, 10, 60
+
+	導入ソフトウェアコンポーネント,Fix,機能
+	Syslog Probe,6.0,システムログ監視エージェント（UNIX系のsyslog）
+	MHNT Log Probe,11.0,システムログ監視エージェント（Windowsイベントログ）
+	GLF Probe,8.0,アプリケーションログ監視エージェント
+	UNIX OS Agent,FP3,OS性能監視・リソース監視エージェント（UNIX）
+	Linux OS Agent,FP3,OS性能監視・リソース監視エージェント（Linux）
+	Windows OS Agent,FP3,OS性能監視・リソース監視エージェント（Windows）
+	Universal Agent,FP3,個別開発スクリプトによる監視エージェント（AIX）
+
+2.1.1.3. 監視・作業用端末導入ソフトウェアコンポーネント
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header-rows: 1
+    :widths: 40, 10, 40, 10
+
+    導入ソフトウェアコンポーネント,Fix,機能,備考
+    Netcool/OMNIbus Active Event List,FP3,Netcool/OMNIbus監視コンソール,AEL
+    Netcool/OMNIbus Administrator,FP3,Netcool/OMNIbus管理コンソール
+    Netcool/OMNIbus Accelerated Event Notifier,FP3,Netcool/OMNIbus POPUPモジュール,AEN
+    Tivoli Integrated Portal [#]_,,Netcool監視コンソール（Web ブラウザ),TIP
+    Tivoli Enterprise Portal,FP3,ITM管理コンソール,TEP
+
+|
+
+.. [#] TIPはNetcool/OMNIbus、ITNMの監視コンソールをブラウザー経由で閲覧、操作するものであるため、
+  監視端末には任意のブラウザーが必要。加えて、Java v1.5またはv1.6の導入が前提となる。
+
+2.1.2. 統合監視システム導入ソフトウェア一覧
+------------------------------------------------
+
+.. csv-table::
+    :header-rows: 1
+
+    ライセンス,Netcool /OMNIbus and IBM Tivoli Network Manager,"IBM Tivoli Monitoring","Netcool /OMNIbus","IBM Tivoli Monitoring"
+    コンポーネント名,ObjectServer,SNMP Probe,EIF Probe,Nonnative Probe,WebGUI,ITNM,TEMS,TEPS ,DB2 ESE,Process Agent,Syslog Probe,MHNT Log Probe,GLF Probe,UNIX OS Agent,Linux OS Agent,Windows OS Agent,Universal Agent
+    NW Zone,サーバー,OS,統合監視サーバ,監視対象機器
+    Green,統合監視サーバ,○,○,○,○,○,○,○,○,○,○,○,○,○,○

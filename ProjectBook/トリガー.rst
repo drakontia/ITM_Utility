@@ -1,0 +1,239 @@
+**********
+4 Triggers
+**********
+
+4.1 Database Trigger
+=====================
+
+4.1.1 alerts.status
+----------------------
+
+4.1.1.1 Insert
+^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+  :header-rows: 1
+
+	TriggerType,Database,Action,Insert,On,Database Name,alerts,Table Name,status
+	閲覧モード,処理記述のみ,処理対象フィールドのみ,
+	Timing,Pre,Priority,1,Trigger Name,di001_new_row,Trigger Group,default_triggers
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Tally,"(デフォルト処理) ""1"" をセットする"
+	ServerName,(デフォルト処理) 受信したObjectServer名をセットする
+	StateChange,(デフォルト処理) 受信日時をセットする。
+	InternalLast,(デフォルト処理) 受信日時をセットする。
+	ServerSerial,(デフォルト処理) Serialフィールドの値をセットする。(Serialフィールドはシステム内部でセットされる)
+	CustomerCode,お客様コード(顧客情報取得プロシージャから取得)をセットする。
+	Customer,お客様名(顧客情報取得プロシージャから取得)をセットする。
+	SubAccount,環境名(顧客情報取得プロシージャから取得)をセットする。
+	SDMOperatorGroup,担当オペレーター識別子(顧客情報取得プロシージャから取得)をセットする。
+	Identifier,"受信イベントの Identifier の冒頭に ""CustomerCode"" を追記した値をセットする。"
+	Action
+	①,イベントの基本情報（受信日時/イベント受信回数の初期値[1]など）をセットする。
+	②,さがみ野共同監視で必要なお客様識別情報をセットする。( SQLプロシージャ proc_get_custom_values を使用する)
+	③,受信イベントの情報をファイルに出力する。
+	ログ対象,ログファイル,備考
+	すべてのイベント,初受信イベントの到達時（未処理）の全てのイベント
+	高重大度のイベント,"上記のうち重大度がCritical, Major, Majorのイベント"
+	Comment
+	Timing,Pre,Priority,2,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,3,Trigger Name,di003_judge_rca_events,Trigger Group,primary_only
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	ZProcessState,"ITNMのRCA対象（Ping, Link Up/Down）以外のイベントは、受信時点で ""1"" (RCA処理済) をセットする。"
+	Action
+	①,ITNMのRCA対象のイベントであるかどうかを判定し、対象外のイベントについて、RCA処理済(ZProcessState=1）をセットする
+	※ ITNMのRCA対象イベントの判断基準: AlertGroup='Generic Link Status'（Link Up/Downイベント） または Component='Ping'（ITNMポーリング監視）
+	Comment
+	Timing,Pre,Priority,4,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,5,Trigger Name,di005_add_suppress,Trigger Group,primary_only
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,5,Trigger Name,di005_clear_suppress,Trigger Group,primary_only
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,5,Trigger Name,di005_event_sup,Trigger Group,primary_only
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	SuppressEscl,非監視リストにマッチしたイベントについて、非監視フラグ（SuppressEscl=4）をセットする
+	Action
+	①,イベントの特定のフィールドについて、非監視リストテーブルにマッチするものがあるかどうかを判定する
+	判定の方法,テーブルの各行について、次の4項目（列）について値の入っている項目すべてが以下の条件でマッチする
+	非監視リストテーブル：,user_settings.suppress_event_forwarding
+	Node,大文字・小文字区別無しで完全マッチング
+	Component,完全マッチング
+	SubComponent,完全マッチング
+	Summary,文字列部分マッチング
+	マッチしていると判定されたイベントに、非監視フラグ（SuppressEscl=4）をつける
+	Comment
+	Timing,Pre,Priority,5,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,6,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,7,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,8,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,9,Trigger Name,di009_add_node_information,Trigger Group,primary_only
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Summary,"重大度が Major(3) の場合、Summary の冒頭に ""(Call不要) "" を追記する。"
+	Severity,重大度が Major(3) の場合、Minor(4) に変更する。 / 重大度が Critical(5) の場合、かつ、重要サーバリストに存在しない場合、Minor(4) に変更する。
+	Action
+	①,"重大度が""Minor(3)""のイベントの場合、　重大度を""Major(4)""に変更し、本文冒頭に""(Call不要)""を追記する。"
+	②,"重大度が""Critical(5)""のイベントの場合、　重要サーバリストテーブル(下表)を参照し、受信イベントのサーバが存在するか判定する。"
+	重要サーバリストテーブル,important_servers
+	判定方法,テーブルの各行に対し、以下の条件を満たすかどうか判定する。(該当する行が存在した場合、判定処理を終了する)
+	Node,完全一致
+	③,"②の条件に該当しないイベントの場合、重大度を""Major(4)""に変更する。"
+	Comment
+	Timing,Pre,Priority,10,Trigger Name,di010_forward_to_shared,Trigger Group,primary_only
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	ZBkupState,"転送イベント(リストテーブルの条件を満たし、ZFwdState = 0)の場合、""1""(処理完了イベントロギング待ちフラグ) をセットする"
+	ZFwdState,"転送イベント(リストテーブルの条件を満たし、ZFwdState = 0)、かつ、監視イベント(SuppressEscl != 4)の場合、""1""(転送待ちフラグ) をセットする"
+	Action
+	①,転送イベントリストテーブルを参照し、受信イベントが該当するか判定する。該当しないイベントについては、本トリガー処理を終了する。(②以降の処理は行わない)
+	重要サーバリストテーブル,custom.forward_to_shared
+	判定方法,テーブルの各行に対し、以下の全ての条件を満たすかどうか判定する。(該当する行が存在した場合、判定処理を終了する)
+	Node,完全一致 (大文字・小文字区別なし)
+	Severity,設定値以上
+	②,処理完了イベントロギング待ちフラグ（ZBkupState = 1）をセットする。
+	③,監視対象イベント（SuppressEscl!= 4）の場合、転送待ちフラグ（ZFwdState=1）をセットする。
+	Comment
+	Timing,Pre,Priority,11,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,12,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,13,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,14,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,15,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,16,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,17,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,18,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,19,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Pre,Priority,20,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,1,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,2,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,3,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,4,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,5,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,6,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,7,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,8,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,9,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,10,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,11,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,12,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,13,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,14,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,15,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,16,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,17,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,18,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,19,Trigger Name,Trigger Group
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	Action
+	Comment
+	Timing,Post,Priority,20,Trigger Name,new_status_inserts,Trigger Group,stats_triggers
+	Affected Columns,Apply to,●,row,statement,State,Debug,■,Enable
+	-
+	-
+	-,Action
+	-,(デフォルトからの変更なし)
+	-,alerts.status の新規挿入をカウントする。
+	Comment

@@ -1,0 +1,203 @@
+3. 運用詳細設計
+================
+
+3.1. バックアップ詳細設計
+---------------------------
+
+3.1.1. システムバックアップ詳細設計
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| システムバックアップとVGバックアップの取得時は、ミドルウェアプロセスを停止することとする。
+| システムバックアップとVGバックアップの取得の仕組みについては、『バックアップ管理』を参照のこと。
+
+3.1.2. イベントログバックアップ詳細設計
+""""""""""""""""""""""""""""""""""""""""""
+
+以下のトリガーを使用し、自動処理中の複数ポイントにおいてイベント情報をログ形式で出力する。
+
+.. csv-table::
+  :header-rows: 1
+
+	No.,イベント情報,トリガー名,出力先,出力タイミング,取得方法
+	ディレクトリ名,ファイル名
+	1,イベント受信ログ,"new_row, deduplication",/tivmaint/evtlog/all,evtlog_insert.log1 ,イベント受信時,ObjectServer上の
+	Triggerにて実施
+	2,監視対象イベントログ,/tivmaint/evtlog/all,evtlog_processed.log1,一日一回チェックし対象,ObjectServer上の
+	が存在した時,Triggerにて実施
+	3,抑止イベントログ,/tivmaint/evtlog/all,evtlog_suppressd.log1,1分に一回対象が存在,ObjectServer上の
+	した時,Triggerにて実施
+	4,イベント削除ログ,"delete_clears, ",/tivmaint/evtlog/all,evtlog_clear.log1,"1分に一回対象が存在した時, ",ObjectServer上の
+	1日1回対象が存在した時,Triggerにて実施
+
+3.1.3. ミドルウェア構成データバックアップ詳細設計
+----------------------------------------------------
+
+製品構成のバックアップを行う方法を以下の表に記載する。
+
+
+.. csv-table::
+  :header-rows: 1
+
+  No.,バックアップ対象,取得ログ内容,スクリプト名,出力先ディレクトリ名/ファイル名,実行タイミング
+  1,Netcool/OMNIbus,ユーザー情報（M/W上のユーザーのみ）,/apl_01/sh/,/backup_01/omnibus/confpackbackup/,計画停止時
+  (confpack出力) Event DB構成情報,fomnibus_confbackup.sh,ObjectServername_confbackup_timestamp.gz
+  自動化構成情報（Trigger設定）
+  2,ITNM,監視対象リスト（IPアドレス/ホスト名）,/apl_01/sh/,/backup_01/itnm/mysqldump/,計画停止時
+  (mysqldump出力) ネットワークトポロジー,fncim_mysqldump.sh,domainname_mysqldump_timestamp.gz
+  MIB情報
+  ポーリングデータ
+  ポーリング設定（監視設定）
+
+3.2. ログメンテナンス詳細設計
+-------------------------------
+
+3.2.1. ログメンテナンス対象一覧
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(1) イベントログ
+""""""""""""""""""
+
+.. csv-table::
+  :header-rows: 1
+
+	No.,メンテナンス対象,保管元ディレクトリ/ファイル名,保管先ディレクトリ名/ファイル名,実装方式,保管日数,備考
+	1,イベント受信ログ,/tivmaint/evtlog/all,/tivmaint/evtlog/insert
+	evtlog_insert.log1 ,evtlog_insert_timestamp.gz,logmgr,90日
+	2,監視対象イベントログ,/tivmaint/evtlog/all,/tivmaint/evtlog/normal
+	evtlog_processed.log1,evtlog_processed_timestamp.gz,logmgr,90日
+	3,抑止イベントログ,/tivmaint/evtlog/all,/tivmaint/evtlog/suppressed
+	evtlog_suppressd.log1,evtlog_suppressed_timestamp.gz,logmgr,90日
+	4,イベント削除ログ,/tivmaint/evtlog/all,/tivmaint/evtlog/clear
+	evtlog_clear.log1,evtlog_clear_timestamp.gz,logmgr,90日
+
+(2) 製品ログ
+""""""""""""""
+
+・統合監視サーバ
+
+
+.. csv-table::
+  :header-rows: 1
+
+	No.,メンテナンス対象,保管元ディレクトリ/ファイル名,保管先ディレクトリ名/ファイル名,実装方式,保管日数,備考
+	1,ObjectServer,$OMNIHOME/log/,/tivmaint/backup/omnibus/log/,2ファイルを1ファイル
+	(Virtual Interface) NCOMS_XXXV.log,NCOMS_XXXV.log_timestamp.gz,logmgr,90日,にして保管。
+	NCOMS_XXXV.log_old
+	ObjectServer,$OMNIHOME/log/,/tivmaint/backup/omnibus/log/,2ファイルを1ファイル
+	(Primary) NCOMS_XXX1.log,NCOMS_XXX1.log_timestamp.gz,logmgr,90日,にして保管。
+	NCOMS_XXX1.log_old
+	ObjectServer,$OMNIHOME/log/,/tivmaint/backup/omnibus/log/,2ファイルを1ファイル
+	(Secondary) DENCO_XXX2.log,DENCO_XXX2.log_timestamp.gz,logmgr,90日,にして保管。
+	DENCO_XXX2.log_old
+	2,Process Agent,$OMNIHOME/log/,/tivmaint/backup/omnibus/log/,pa_nameは
+	pa_name.log,pa_name.log_timestamp.gz,logmgr,90日,2.2.2.2章参照
+	3,Bi-Gateway,$OMNIHOME/log/,/tivmaint/backup/omnibus/log/
+	NCO_BIGW_XXX2.log,NCO_BIGW_XXX2.log_timestamp.gz,logmgr,90日
+	No.,メンテナンス対象,保管元ディレクトリ/ファイル名,保管先ディレクトリ名/ファイル名,実装方式,保管日数,備考
+	4,EIF Probe,$OMNIHOME/log/,/tivmaint/backup/probes/log/,最大サイズ時に
+	probename.log,probename.log_timestamp.gz,logmgr,90日,～_OLDが作成
+	5,SNMP Probe,$OMNIHOME/log/,/tivmaint/backup/probes/log/,される。
+	probename.log,probename.log_timestamp.gz,logmgr,90日
+	6,TEPS,$CANDLEHOME/logs/,/tivmaint/backup/itm/log/
+	hostname_cq_timestamp.log,hostname_cq_backup.log_timestamp.gz,logmgr,90日
+	7,TEMS,$CANDLEHOME/logs/,/tivmaint/backup/itm/log/
+	hostname_ms_timestamp.log,hostname_ms_backup.log_timestamp.gz,logmgr,90日
+	hostname_ms_HEXtimestamp-nn.log,hostname_ms_backup-nn.log_timestamp.gz,logmgr,90日,nn:数値
+	8,インストールログ,$CANDLEHOME/logs/,/tivmaint/backup/itm/log/
+	candle_installation.log,candle_installation.log_timestamp.gz,logmgr,90日
+	9,DB2,/home/dasuser1/das/dump/,/tivmaint/backup/db2/log/
+	db2dasdiag.log,db2dasdiag.log_timestamp.gz,logmgr,90日
+	/home/db2inst1/sqllib/db2dump/,/tivmaint/backup/db2/log/
+	db2diag.log ,db2diag.log_timestamp.gz,logmgr,90日
+	db2inst1.nfy,db2inst1.nfy_timestamp.gz,logmgr,90日
+	10,ITNM Server,$NCHOME/log/precision/,/tivmaint/backup/itnm/log/
+	processname_domainname.log,processname_domainname.log_timestamp.gz,logmgr,90日
+	ManagedStatus.pm.log,ManagedStatus.pm.log_timestamp.gz,logmgr,90日
+	ncp_agent_registrar.trace,ncp_agent_registrar.trace_timestamp.gz,logmgr,90日
+	nco_mib.log,nco_mib.log_timestamp.gz,logmgr,90日
+	nco_mib.trace,nco_mib.trace_timestamp.gz,logmgr,90日
+	11,TIP,/opt/IBM/tip/profiles/,/tivmaint/backup/tip/log/
+	TIPProfile/logs/server1/
+	SystemOut.log,SystemOut.log_timestamp.gz,logmgr,90日
+	SystemErr.log,SystemErr.log_timestamp.gz,logmgr,90日
+	/opt/IBM/tip/profiles/TIPProfile/logs/,/tivmaint/backup/tip/log/
+	webtop.log,webtop.log_timestamp.gz,logmgr,90日
+	activity.log,activity.log_timestamp.gz,logmgr,90日
+	/opt/IBM/tip/profiles/TIPProfile/logs/ffdc/,/tivmaint/backup/tip/log/
+	server1_ID.log,server1_ID.log_timestamp.gz,logmgr,90日
+	server1_exception.log,server1_exception.log_timestamp.gz,logmgr,90日
+
+・監視対象サーバー
+
+
+.. csv-table::
+  :header-rows: 1
+
+  No.,メンテナンス対象,保管元ディレクトリ/ファイル名,保管先ディレクトリ名/ファイル名,実装方式,保管日数,備考
+	1,Syslog Probe,$OMNIHOME/log/,/tivmaint/backup/probes/log/,最大サイズ時に
+	probename.log,probename.log_timestamp.gz,logmgr,90日,～_OLDが作成
+	2,GLF Probe,$OMNIHOME/log/,/tivmaint/backup/probes/log/,される。
+	probename.log,probename.log_timestamp.gz,logmgr,90日
+	3,MHNT Log Probe,$OMNIHOME/log/,無し,※ 1
+	probename.log
+	4,インストールログ,$CANDLEHOME/logs/,/tivmaint/backup/TEMA/log/
+	(TEMA) candle_installation.log,candle_installation.log_timestamp.gz,logmgr,90日
+	5,UNIX OS Agent,/opt/IBM/TEMA/logs/,/tivmaint/backup/tema/log/
+	hostname_ux_timestamp.log,hostname_ux_timestamp.log_timestamp.gz,logmgr,90日
+	6,Linux OS Agent,/opt/IBM/TEMA/logs/,無し,※ 1
+	hostname_lz_timestamp.log
+	7,Universal Agent,/opt/IBM/TEMA/logs/,/tivmaint/backup/tema/log/
+	hostname_um_timestamp.log,hostname_um_timestamp.log_timestamp.gz,logmgr,90日
+	8,Windows OS Agent,install_dir\tmaitm6\logs\,無し,※ 1
+	hostname_nt_HEXtimestamp-nn.log
+
+(3) その他
+""""""""""""
+
+.. csv-table::
+  :header-rows: 1
+
+  No.,メンテナンス対象,保管元ディレクトリ/ファイル名,保管先ディレクトリ名/ファイル名,実装方式,保管日数,備考
+  1,各種スクリプトログ
+  logmgr,90日
+  2
+  3
+
+(4) 統合監視システム用logmgr設定ファイル
+""""""""""""""""""""""""""""""""""""""""""
+
+.. csv-table::
+  :header-rows: 1
+
+  設定ファイル,ファイルパス,説明
+  構成ファイル(Server用) /etc/logmgr/logmgr_tivoli_server.conf,サーバー製品関連のログメンテナンス用の構成ファイル。
+  構成ファイル（Agent用）,/etc/logmgr/logmgr_tivoli_agent.conf,エージェント製品関連のログメンテナンス用の構成ファイル。
+  ステートファイル（Server用）,/etc/logmgr/logmgr_tivoli_server.status,サーバー製品関連のログメンテナンス用のステートファイル。
+  ステートファイル（Agent用）,/etc/logmgr/logmgr_tivoli_agent.status,エージェント製品関連のログメンテナンス用のステートファイル。
+
+(5) logmgr起動設定
+""""""""""""""""""""
+
+rootのcrontabの以下の設定により自動実行される。
+
+・ 統合監視サーバ
+
+.. csv-table::
+  :header-rows: 1
+
+  No.,スクリプト名,実行タイミング
+  1,/usr/sbin/logmgr -c /etc/logmgr/logmgr_tivoli_server.conf -s /etc/logmgr/logmgr_tivoli_server.status > /dev/null 2>&1,00:00
+
+・ 全AIXサーバー（統合監視サーバを含む）
+
+.. csv-table::
+  :header-rows: 1
+
+  No.,スクリプト名,実行タイミング
+  1,/usr/sbin/logmgr -c /etc/logmgr/logmgr_tivoli_agent.conf -s /etc/logmgr/logmgr_tivoli_agent.status > /dev/null 2>&1,00:00
+
+3.3. セキュリティ詳細設計
+---------------------------
+
+セキュリティ設計はGSD331に準拠したものとする。
+必要な設定については第2章にて記載済みのため、本章で特記する項目は無し。

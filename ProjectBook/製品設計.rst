@@ -1,0 +1,75 @@
+************************
+3. システム製品設計
+************************
+
+3.1. ハードウェア設計
+=======================
+
+当システムで使用するマシンは以下のようになる。
+
+.. csv-table::
+    :header-rows: 1
+
+    ホスト名,リソース,備考
+    XXXX,マシン,system p 750,
+    ,CPU,Intel ?,4Core
+    ,物理メモリ,???,8GB
+    ,内蔵Disk,???,30GB
+    ,外部Disk,DS8000,250GB
+    ,OS,AIX,7.1
+
+
+3.2. 使用ソフトウェア一覧
+===========================
+
+3.2.1. 使用ソフトウェア製品名と役割
+--------------------------------------
+
+.. csv-table::
+    :header-rows: 1
+
+	製品名,役割
+	Netcool/OMNIbus,統合監視アプリケーション。イベントの収集を行う。
+	Netcool/OMNIbus Probe,イベントを収集し、ObjectServerへ通知するコンポーネント。
+	Netcool/OMNIbus WebGUI,統合監視アプリケーション。イベントの表示を行う。
+	IBM Tivoli Network manger,Network監視を行う
+	IBM Tivoli Monitoring,エージェントからデータを収集し、プロセス監視、性能監視を行う。
+	IBM Tivoli Monitoring Agent,データを収集
+	IBM Tivoli Monitoring Client,データを表示
+	DB2,Tivoli Monitoring の Console 製品(TEPS)用
+
+3.2.2. 製品バージョン及び適用済みPTF
+---------------------------------------
+
+使用する製品のバージョン及びPTF/FPレベルは下記のとおりである
+
+.. csv-table::
+    :header-rows: 1
+    :widths: 40, 10, 10, 40
+
+	Software,Version,適用PTF/FP,適用理由
+	Tivoli Netcool/OMNIbus,7.3.1,FP2
+	Tivoli Netcool/OMNIbus Probe,7.3.1,n/a
+	Tivoli Netcool/OMNIbus WebGUI,7.3.1,n/a
+	IBM Tivoli Network Manager ,3.9,n/a
+	IBM Tivoli Monitoring,6.2.3,FP01
+	IBM Tivoli Monitoring Agent,6.2.3,n/a
+	IBM Tivoli Monitoring Client,6.2.3,n/a
+	DB2,9.7,n/a
+
+3.2.3. 導入モジュール一覧
+----------------------------
+
+.. csv-table::
+  :header-rows: 1
+
+  Software,監視サーバー,Windows,RHEL,AIX,Solaris,HP-UX,NW機器,監視端末
+	Tivoli Netcool/OMNIbus,○,,,,,,,,,,
+	Tivoli Netcool/OMNIbus Probe,○,○,
+	Tivoli Netcool/OMNIbus WebGUI,○,○,
+	IBM Tivoli Network Manager ,○,○,
+	IBM Tivoli Monitoring,○,○,
+	IBM Tivoli Monitoring Agent,○,○,
+	IBM Tivoli Monitoring Client,,,
+	DB2,○,,
+

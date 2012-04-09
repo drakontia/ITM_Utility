@@ -1,0 +1,90 @@
+********************
+1. システム設計方針
+********************
+
+1.1. 本書の目的
+=================
+
+1.1.1.本書の記述範囲
+-----------------------
+
+本書は、統合監視システムの詳細設計を定義する
+統合監視システムは、次の機能を持っている
+
+(1)イベント管理機能
+  メンテナンス時のイベントの抑止処理など、現行TECルールを使用して行われているイベント自動化処理
+(2)監視機能
+  サーバー、Appliance機器、Network機器における障害発生を検知し通知する、システムの監視機能
+(3)パフォーマンス・キャパシティ管理機能
+  サーバー、Network機器のパフォーマンス・キャパシティ統計ログの取得と管理
+(4)監視オペレーション機能
+  オペレーターが監視イベントに対するオペレーションを実施するための機能
+(5)運用自動化機能
+  オペレーターとSEが行う運用業務の自動化を実現する機能
+
+1.1.2 本書の記述方針
+----------------------
+
+本書は、統合監視システムにおいて詳細設計に関する記述を行う。
+詳細設計とは、当システムの提供する機能を実現するに当たり、必要となる処理の概要、手順、対象について記述することである。
+処理を実装するに当たり、必要となるハードウェア、ソフトウェアへの設定については、詳細設定書を参照すること。
+
+1.1.3. 本書の管理方針
+------------------------
+
+本書は、統合監視システムにおいて変更作業が行われた際に更新を行う。
+更新は、が行うものとし、変更後お客様の承認を得るものとする。
+
+1.2. 詳細設計書文書構成
+=========================
+
+統合監視システムの文書は以下のような構成で作成される
+
+.. csv-table::
+    :header-rows: 1
+
+    文書名,記述内容
+    統合監視システム基本設計書,統合監視システムにおける、対象範囲、提供機能にかんする設計が記述される。
+    統合監視システム詳細設計書（本書）,統合監視システムで利用される、IBM ソフトウェアの製品や運用に必要な設計が記述される。
+    オートメーション設計書,ObjectServerで実装されるイベント管理機能の仕様が記述される。
+    監視対象設定書,統合監視システムにより行われる監視の具体的な設定値が記述される。
+
+1.1.2. 用語定義
+------------------
+
+本書で用いられる製品・コンポーネントの正式名と、記載名を以下の表に記述する。
+
+.. csv-table::
+    :header-rows: 1
+
+	記載名,製品・コンポーネント名
+	ObjectServer,Netcool/OMNIbus ObjectServer
+	EIF Probe,Netcool/OMNIbus Tivoli EIF Probe
+	SNMP Probe,Netcool/OMNIbus SNMP Trapd Probe
+	Syslog Probe,Netcool/OMNIbus Syslog Probe
+	GLF Probe,Netcool/OMNIbus Generic Logfile Probe
+	MHNT Log Probe,Netcool/OMNIbus MHNT Log Probe
+	Process Agent,Netcool/OMNIbus Process Agent
+	Bi-Gateway,Netcool/OMNIbus Bi-Gateway
+	AEL,Netcool/OMNIbus Active Event List
+	Administrator,Netcool/OMNIbus Administrator
+	AEN,Netcool/OMNIbus Accelerated Event Notifier
+	ITNM,IBM Tivoli Network Manager
+	WebGUI,Netcool WebGUI
+	TIP,Tivoli Integrated Portal
+	ITM,IBM Tivoli Monitoring
+	TEMS,Tivoli Enterprise Management Server
+	TEPS,Tivoli Enterprise Portal Server
+	UNIX OS Agent,IBM Tivoli Monitoring UNIX OS Agent
+	Linux OS Agent,IBM Tivoli Monitoring Linux OS Agent
+	Windows OS Agent,IBM Tivoli Monitoring Windows OS Agent
+	Universal Agent,IBM Tivoli Monitoring Universal Agent
+	TEP,Tivoli Enterprise Portal
+	DB2,IBM DB2 Enterprise Server Edition
+
+本書の中で用いられる、OSの環境変数と、変数が示す値を以下の表に記述する。
+
+:NCHOME: /opt/IBM/netcool
+:OMNIHOME: /opt/IBM/netcool/omnibus
+:NC_RULES_HOME: /opt/IBM/netcool/omnibus/probes/NcKL/rules
+:CANDLEHOME: /opt/IBM/ITM

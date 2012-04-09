@@ -1,0 +1,81 @@
+************************
+2. システム全体構成
+************************
+
+ここでは、当監視システムの対象範囲、および、全体構成について記載する。
+
+2.1. システム対象範囲
+=======================
+
+当監視システムが管理対象とする機器を以下とする。
+
+.. csv-table::
+    :header-rows: 1
+
+    構成要素,種別,台数,備考
+    監視システム,監視サーバー,2
+    監視対象,中継サーバー,2,
+    ,ネットワークスイッチ,2
+    ,ルーター,6,
+    ,AIX,n,
+    ,RHEL,n,
+    ,Solaris,n,
+    ,HP-UX,n,
+    ,Windows Server 2008,n
+    監視端末,共同監視コンソール,NA
+    ,システム担当者用,nn
+
+2.2. システム全体構成図
+=========================
+
+当監視システムの全体構成図は以下とする。
+
+.. note:: ドリルダウンしすぎ。コンポーネントの話はこの後に出てくるのに、なぜそこまで書くのか。
+
+2.2.1. 全体構成図
+--------------------
+
+.. image:: /images/システム全体構成図.png
+  :width: 40em
+
+2.2.2. コンポーネント一覧
+----------------------------
+
+.. csv-table::
+  :header-rows: 1
+  :widths: 20, 20, 60
+
+  製品カテゴリ,コンポーネント,概要
+	Netcool/OMNIbus,ObjectServer,システム統合管理アプリケーションとなるNetcool/OMNIbusのコアコンポーネント。監視イベントを格納するデータベースを持ち、 監視イベントの自動化処理を行うサーバー。
+	,Uni-GW,ObjectServer間の単方向でイベント同期を行うコンポーネント。プロジェクト環境で発生したイベントをShared O/Sに転送する。 (Unidirectional ObjectServer Gateway)
+	,Bi-GW,ObjectServer間の双方向でイベント同期を行うコンポーネント。 (Bidirectional ObjectServer Gateway)
+	,Process Agent,Netcool/OMNIbusのコンポーネントの起動停止、外部スクリプトの実行をコントロールするコンポーネント。
+	,SNMP Probe,SNMPトラップを受信、処理するコンポーネント。受信したトラップからOMNIbusのイベントを生成し、ObjectServerへ送信する。 (SNMP Trapd Probe)
+	,Ping Probe,ping ファイルに指定されているホストを周期的にpingするコンポーネント。
+	,EIF Probe,TECイベント形式のイベントを受信、処理するエージェント。ホストサーバーからイベントを受信し、OMNIbusのイベントを生成して (Tivoli EIF Probe)ObjectServerへ送信する。
+	,Tivoli Integrated Portal,Netcool 監視コンソール（WebGUI） (TIP)
+	IBM Tivoli Monitoring,Tivoli Enterprise Monitoring Server,監視対象のモニタリングを行うサーバープロセス
+	,Tivoli Enterprise Portal Server,ITMで収集した情報を表示させる管理サーバー
+	,OS Agent,OSに関する監視に特化した監視エージェント
+	,Universal Agent,各種監視スクリプトの実行、TEMSへのアラート送信を行うエージェント
+	,LogFile Agent,ログファイルを監視するためのエージェント（サーバ、各監視対象へインストール）
+	,TEP Client,Tivoli Enterprise Portal Client
+	,DB2,構成情報等を保存するデータベース
+	Tivoli Network Manager,TNM Server,NCIMDB
+
+2.3. システム通信要件（詳細）
+===============================
+
+当監視システムでFirewall設定に影響のあるNW通信要件を以下に記載する。
+
+.. csv-table::
+  :header-rows: 2
+
+	No,送信元,,,,送信先,,,
+	,ロケーション,ノード,IPアドレス,ポート,ロケーション,ノード,IPアドレス,ポート
+	1,L4.XXX,Netcoolサーバー#1,X.X.X.X,443/TCP,XXX,遠隔サーバー,4101/tcp
+	2,L4.XXX,Netcoolサーバー#2,X.X.X.X,80/TCP,XXX,遠隔サーバー,4101/tcp
+
+|
+
+.. note::  ロケーション、ノード定義については要件定義書2.3章参照。
