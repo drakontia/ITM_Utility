@@ -1,0 +1,39 @@
+5 Procedures
+5.1 SQL Procedure
+5.1.1 proc_get_custom_values
+Procedure Name,proc_get_custom_values,処理概要,セットされた顧客情報を呼び出し元(トリガー/プロシージャ)に渡す。
+Parameter
+in/out,Parameter Name,データ型,概要
+out,pgc_Customer,character(16),お客様名
+out,pgc_CustomerCode,character(8),お客様コード
+out,pgc_SubAccount,character(16),稼働環境
+out,pgc_SDMOperatorGroup,character(16),共同監視ObjectServer
+Action
+①,各引数に下表の値をセットする。
+引数,値
+pgc_Customer, ''
+pgc_CustomerCode, 'BNK'
+pgc_SubAccount, 'Production'
+pgc_SDMOperatorGroup, 'sysops_ko'
+備考
+5.2 External Procedure
+5.2.1 proc_start_unigw
+プロシージャ名,proc_start_unigw,処理概要,Uni-Gateway の起動スクリプトを実行する。
+Executable (実行スクリプト),HOST,USER,GROUP
+$OMNIHOME/…,localhost,997 (ncosys),997 (ncoadmin)
+Parameter
+in/out,Parameter Name,データ型,概要
+-,(なし)
+Action
+①,Uni-Gateway の起動スクリプトを実行する。
+備考
+5.2.2 proc_stop_unigw
+プロシージャ名,proc_stop_unigw,処理概要,Uni-Gateway の停止スクリプトを実行する。
+Executable (実行スクリプト),HOST,USER,GROUP
+$OMNIHOME/…,localhost,997 (ncosys),997 (ncoadmin)
+Parameter
+in/out,Parameter Name,データ型,概要
+-,(なし)
+Action
+①,Uni-Gateway の停止スクリプトを実行する。
+備考

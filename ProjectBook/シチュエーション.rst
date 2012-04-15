@@ -1,130 +1,16 @@
-,,,,,,,,,,,,,,
-ITM6.1ƒpƒ‰ƒ[ƒ^[(ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“),,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,ŠÄŽ‹€–Ú,,ŠÄŽ‹•ûŽ®,ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“ðŒ,,,,Ž©“®‰ž“šˆ—‹@”\@ƒAƒNƒVƒ‡ƒ“Ý’è,,,,,,
-,ŠÄŽ‹€–Ú,ŠÄŽ‹“à—eÚ×,ŠÄŽ‹•û–@EAgent‚ÌŽí—Þ,ðŒŽ®,ŠÄŽ‹ŠÔŠu,d‘å“x,”z•z‘ÎÛ,ðŒ‚ª•¡”‚Ìƒ‚ƒjƒ^[‘ÎÛ‚É‘Î‚µ‚Ätrue‚Ìê‡,ƒAƒNƒVƒ‡ƒ“‚ÌŽÀsêŠ,•¡”ƒCƒ“ƒ^[ƒoƒ‹‚É“n‚Á‚ÄðŒ‚ªtrue‚Ìê‡,"ƒVƒXƒeƒ€ƒRƒ}ƒ“ƒh
-ƒAƒNƒVƒ‡ƒ“ŽÀsƒXƒNƒŠƒvƒg",—vŒƒV[ƒgNO,ŠÄŽ‹ƒVƒXƒeƒ€ÝŒv‘,’ˆÓ“_
-,ƒm[ƒhŽ€Šˆ,," UNIX OS Agent
- Linux OS Agent
- Windows OS Agent
- Universal Agent",,“ú@@@@@ŽžŠÔ@@@@@•ª@@@@@•b," Critical
- Warning
- Information"," ALL_*
- Agent’P‘Ì
-@i@@@@@@@@@@j
- ì¬‚µ‚½ƒOƒ‹[ƒv
-@(@@@@@@@@@@j","
- Å‰‚Ì€–Ú‚Ì‚Ý‚ÅŽÀs
+ITM6.1ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼(ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³),,,,,,
 
- Še€–Ú‚É‘Î‚µ‚ÄŽÀs","
- TEMA
-
- TEMS"," 1‚Â‚Ìs‚É‘Î‚µ‚Ä2“xƒAƒNƒVƒ‡ƒ“‚ðŽÀs‚µ‚È‚¢
-
- ŠeƒCƒ“ƒ^[ƒoƒ‹‚ÅƒAƒNƒVƒ‡ƒ“ŽÀs",,"2-1-2 ŠÄŽ‹€–Ú
-2-1-3 ŠÄŽ‹ŠÔŠu",4.1. ŠÄŽ‹€–Ú,
-,ƒfƒBƒXƒN,," UNIX OS Agent
- Linux OS Agent
- Windows OS Agent
- Universal Agent",,“ú@@@@@ŽžŠÔ@@@@@•ª@@@@@•b," Critical
- Warning
- Information"," ALL_*
- Agent’P‘Ì
-@i@@@@@@@@@@j
- ì¬‚µ‚½ƒOƒ‹[ƒv
-@(@@@@@@@@@@j","
- Å‰‚Ì€–Ú‚Ì‚Ý‚ÅŽÀs
-
- Še€–Ú‚É‘Î‚µ‚ÄŽÀs","
- TEMA
-
- TEMS"," 1‚Â‚Ìs‚É‘Î‚µ‚Ä2“xƒAƒNƒVƒ‡ƒ“‚ðŽÀs‚µ‚È‚¢
-
- ŠeƒCƒ“ƒ^[ƒoƒ‹‚ÅƒAƒNƒVƒ‡ƒ“ŽÀs",,"2-1-2 ŠÄŽ‹€–Ú
-2-1-3 ŠÄŽ‹ŠÔŠu",4.1. ŠÄŽ‹€–Ú,
-,CPU,," UNIX OS Agent
- Linux OS Agent
- Windows OS Agent
- Universal Agent",,“ú@@@@@ŽžŠÔ@@@@@•ª@@@@@•b," Critical
- Warning
- Information"," ALL_*
- Agent’P‘Ì
-@i@@@@@@@@@@j
- ì¬‚µ‚½ƒOƒ‹[ƒv
-@(@@@@@@@@@@j","
- Å‰‚Ì€–Ú‚Ì‚Ý‚ÅŽÀs
-
- Še€–Ú‚É‘Î‚µ‚ÄŽÀs","
- TEMA
-
- TEMS"," 1‚Â‚Ìs‚É‘Î‚µ‚Ä2“xƒAƒNƒVƒ‡ƒ“‚ðŽÀs‚µ‚È‚¢
-
- ŠeƒCƒ“ƒ^[ƒoƒ‹‚ÅƒAƒNƒVƒ‡ƒ“ŽÀs",,"2-1-2 ŠÄŽ‹€–Ú
-2-1-3 ŠÄŽ‹ŠÔŠu",4.1. ŠÄŽ‹€–Ú,
-,ƒƒ‚ƒŠ[,," UNIX OS Agent
- Linux OS Agent
- Windows OS Agent
- Universal Agent",,“ú@@@@@ŽžŠÔ@@@@@•ª@@@@@•b," Critical
- Warning
- Information"," ALL_*
- Agent’P‘Ì
-@i@@@@@@@@@@j
- ì¬‚µ‚½ƒOƒ‹[ƒv
-@(@@@@@@@@@@j","
- Å‰‚Ì€–Ú‚Ì‚Ý‚ÅŽÀs
-
- Še€–Ú‚É‘Î‚µ‚ÄŽÀs","
- TEMA
-
- TEMS"," 1‚Â‚Ìs‚É‘Î‚µ‚Ä2“xƒAƒNƒVƒ‡ƒ“‚ðŽÀs‚µ‚È‚¢
-
- ŠeƒCƒ“ƒ^[ƒoƒ‹‚ÅƒAƒNƒVƒ‡ƒ“ŽÀs",,"2-1-2 ŠÄŽ‹€–Ú
-2-1-3 ŠÄŽ‹ŠÔŠu",4.1. ŠÄŽ‹€–Ú,
-,ƒvƒƒZƒX,," UNIX OS Agent
- Linux OS Agent
- Windows OS Agent
- Universal Agent",,“ú@@@@@ŽžŠÔ@@@@@•ª@@@@@•b," Critical
- Warning
- Information"," ALL_*
- Agent’P‘Ì
-@i@@@@@@@@@@j
- ì¬‚µ‚½ƒOƒ‹[ƒv
-@(@@@@@@@@@@j","
- Å‰‚Ì€–Ú‚Ì‚Ý‚ÅŽÀs
-
- Še€–Ú‚É‘Î‚µ‚ÄŽÀs","
- TEMA
-
- TEMS"," 1‚Â‚Ìs‚É‘Î‚µ‚Ä2“xƒAƒNƒVƒ‡ƒ“‚ðŽÀs‚µ‚È‚¢
-
- ŠeƒCƒ“ƒ^[ƒoƒ‹‚ÅƒAƒNƒVƒ‡ƒ“ŽÀs",,"2-1-2 ŠÄŽ‹€–Ú
-2-1-3 ŠÄŽ‹ŠÔŠu",4.1. ŠÄŽ‹€–Ú,
-,ƒƒO," syslog
- ƒCƒxƒ“ƒgƒrƒ…[ƒAƒƒO
- ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒƒO
-@i                        j
- ‚»‚Ì‘¼ƒƒO
-@i@@@@@@@@@@@@j"," UNIX OS Agent
- Linux OS Agent
- Windows OS Agent
- Universal Agent
-",,“ú@@@@@ŽžŠÔ@@@@@•ª@@@@@•b," Critical
- Warning
- Information"," ALL_*
- Agent’P‘Ì
-@i@@@@@@@@@@j
- ì¬‚µ‚½ƒOƒ‹[ƒv
-@(@@@@@@@@@@j","
- Å‰‚Ì€–Ú‚Ì‚Ý‚ÅŽÀs
-
- Še€–Ú‚É‘Î‚µ‚ÄŽÀs","
- TEMA
-
- TEMS"," 1‚Â‚Ìs‚É‘Î‚µ‚Ä2“xƒAƒNƒVƒ‡ƒ“‚ðŽÀs‚µ‚È‚¢
-
- ŠeƒCƒ“ƒ^[ƒoƒ‹‚ÅƒAƒNƒVƒ‡ƒ“ŽÀs",,"2-1-2 ŠÄŽ‹€–Ú
-2-1-3 ŠÄŽ‹ŠÔŠu",4.1. ŠÄŽ‹€–Ú,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
+,ãƒŠãƒ“ã‚²ãƒ¼ã‚¿ãƒ¼ãƒ»ãƒ“ãƒ¥ãƒ¼,ãƒŠãƒ“ã‚²ãƒ¼ã‚¿ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ ,ãƒ¯ãƒ¼ã‚¯ã‚¹ãƒšãƒ¼ã‚¹,è¦ä»¶ã‚·ãƒ¼ãƒˆNo,ç›£è¦–ã‚·ã‚¹ãƒ†ãƒ è¨­è¨ˆæ›¸,æ³¨æ„ç‚¹
+,ç‰©ç†,Enterprise,ã‚¨ãƒ³ã‚¿ãƒ¼ãƒ—ãƒ©ã‚¤ã‚ºçŠ¶æ³,3-3-6 ã‚³ãƒ³ã‚½ãƒ¼ãƒ«è¦ä»¶,5.2 ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹è¨­è¨ˆ,
+,,,ç®¡ç†å¯¾è±¡ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ³,,,
+,,,EIBå¤‰æ›´ãƒ­ã‚°,,,
+,Admin view,Enterprise,ã‚¨ãƒ³ã‚¿ãƒ¼ãƒ—ãƒ©ã‚¤ã‚ºçŠ¶æ³,3-3-6 ã‚³ãƒ³ã‚½ãƒ¼ãƒ«è¦ä»¶,5.2 ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹è¨­è¨ˆ,
+,,,ç®¡ç†å¯¾è±¡ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ³,,,
+,,,,,,
+,,,,,,
+,ope1 view,Floor1,Floor1 status,3-3-6 ã‚³ãƒ³ã‚½ãƒ¼ãƒ«è¦ä»¶,5.2 ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹è¨­è¨ˆ,
+,,,Floor1 History,,,
+,,,,,,
+,,,,,,
+,ope2 view,Floor2,Floor2 status,3-3-6 ã‚³ãƒ³ã‚½ãƒ¼ãƒ«è¦ä»¶,5.2 ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹è¨­è¨ˆ,
+,,,Floor2 History,,,
